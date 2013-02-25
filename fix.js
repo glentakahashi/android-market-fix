@@ -1,16 +1,22 @@
 // ==UserScript==
-// @name           Android Market Fix
+// @name           Google Play 50 App Pages Fix (updated Feb. 5 2013)
 // @namespace      glentakahashi
-// @description    Fixes the blank pages in android market when browsing My Library.
-// @include /^https?:\/\/market\.android\.com\/mylibrary.*/
+// @description    Previously known as the Android Market Fix, this has been updated to fix the
+//                 bug that if you have over 50 pages of apps in My Android Apps - Google Play,
+//                 you cannot view all of them. Fixes it to add more buttons to page through,
+//                 and fixes invisible pages.
+// @include /^https?:\/\/play\.google\.com\/apps.*/
 // ==/UserScript==
 var strCSS = 'cssRules';
+//hack for internet explorer
 if( document.all ) { strCSS = 'rules'; }
 for(var i = 0; i < document.styleSheets.length; i++) {
-    for(var j = 0; j < document.styleSheets[i][strCSS].length; j++) {
+    var css = document.styleSheets[i][strCSS];
+    var cssLen = document.styleSheets[i][strCSS].length;
+    for(var j = 0; j < cssLen; j++) {
         //found!
-        if( document.styleSheets[i][strCSS][j].cssText.indexOf( ".carousel-pages-wrapper" ) == 0 ) {
-            document.styleSheets[i][strCSS][j].style.width = "auto";
+        if( css[j].cssText.indexOf( ".carousel-pages-wrapper" ) >= 0 ) {
+            css[j].style.width = "1000000px";
         }
     }
 }
